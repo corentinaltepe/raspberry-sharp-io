@@ -1,7 +1,7 @@
 ﻿#region References
 
 using System;
-using Common.Logging;
+using Microsoft.Extensions.Logging;
 using Raspberry.IO.InterIntegratedCircuit;
 using Raspberry.Timers;
 using UnitsNet;
@@ -21,8 +21,8 @@ namespace Raspberry.IO.Components.Controllers.Pca9685
         #region Fields
 
         private readonly I2cDeviceConnection connection;
-        
-        private static readonly ILog log = LogManager.GetLogger<Pca9685Connection>();
+
+        private ILogger log;
         private static readonly TimeSpan delay = TimeSpan.FromMilliseconds(5);
         
         #endregion
@@ -37,7 +37,13 @@ namespace Raspberry.IO.Components.Controllers.Pca9685
         {
             this.connection = connection;
 
-            log.Info(m => m("Resetting PCA9685"));
+            ILoggerFactory loggerFactory = new LoggerFactory()
+           .AddConsole()
+           .AddDebug();
+            log = loggerFactory.CreateLogger<Pca9685Connection>();
+
+            log.LogInformation("Resetting PCA9685");
+
             WriteRegister(Register.MODE1, 0x00);
         }
 
@@ -58,16 +64,15 @@ namespace Raspberry.IO.Components.Controllers.Pca9685
 
             preScale -= 1.0m;
 
-            log.Trace(m => m("Setting PWM frequency to {0} Hz", frequency));
-            log.Trace(m => m("Estimated pre-maximum: {0}", preScale));
+            log.LogInformation($"Setting PWM frequency to {frequency} Hz");
+            log.LogInformation($"Estimated pre-maximum: {preScale}");
 
             var prescale = Math.Floor(preScale + 0.5m);
 
-            log.Trace(m => m("Final pre-maximum: {0}", prescale));
+            log.LogInformation($"EFinal pre-maximum: {prescale}");
 
             var oldmode = ReadRegister(Register.MODE1);
             var newmode = (byte) ((oldmode & 0x7F) | 0x10); // sleep
-
 
             WriteRegister(Register.MODE1, newmode); // go to sleep
 

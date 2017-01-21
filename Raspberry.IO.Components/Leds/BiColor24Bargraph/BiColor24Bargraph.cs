@@ -39,8 +39,9 @@ namespace Raspberry.IO.Components.Leds.BiColor24Bargraph
 
 			if (ledNo > 23) throw new Exception("led must be between 0 and 23");
 
-			long r,c;
-			r = Math.DivRem(ledNo,4,out c) * 2;
+            long r = ( ledNo / 4 )* 2;
+            long c = ledNo % 4;
+
 			if (ledNo >= 12) c += 4;
 
 			if (r > 4) r -= 6;

@@ -9,7 +9,6 @@ namespace Raspberry.IO.SerialPeripheralInterface
         public SetMaxSpeedException() {}
         public SetMaxSpeedException(string message) : base(message) {}
         public SetMaxSpeedException(string message, Exception innerException) : base(message, innerException) {}
-        protected SetMaxSpeedException(SerializationInfo info, StreamingContext context) : base(info, context) {}
     }
 #pragma warning restore 1591
 }

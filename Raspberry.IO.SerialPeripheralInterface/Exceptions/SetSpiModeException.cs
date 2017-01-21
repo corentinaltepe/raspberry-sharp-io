@@ -9,7 +9,6 @@ namespace Raspberry.IO.SerialPeripheralInterface
         public SetSpiModeException() {}
         public SetSpiModeException(string message) : base(message) {}
         public SetSpiModeException(string message, Exception innerException) : base(message, innerException) {}
-        protected SetSpiModeException(SerializationInfo info, StreamingContext context) : base(info, context) {}
     }
 #pragma warning restore 1591
 }

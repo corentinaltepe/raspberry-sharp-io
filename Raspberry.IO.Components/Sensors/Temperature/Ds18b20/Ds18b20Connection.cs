@@ -79,7 +79,7 @@ namespace Raspberry.IO.Components.Sensors.Temperature.Ds18b20
                 lines = File.ReadAllLines(deviceFile);
             }
 
-            var equalsPos = lines[1].IndexOf("t=", StringComparison.InvariantCultureIgnoreCase);
+            var equalsPos = lines[1].IndexOf("t=", StringComparison.OrdinalIgnoreCase);
             if (equalsPos == -1)
                 throw new InvalidOperationException("Unable to read temperature");
 

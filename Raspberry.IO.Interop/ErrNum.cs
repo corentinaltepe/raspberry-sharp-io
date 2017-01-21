@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Raspberry.IO.Interop
@@ -28,7 +29,7 @@ namespace Raspberry.IO.Interop
             var messagePtr = strerror(err);
 
             var strErrorMessage = (messagePtr != IntPtr.Zero)
-                ? Marshal.PtrToStringAuto(messagePtr)
+                ? Marshal.PtrToStringAnsi(messagePtr)
                 : "unknown";
 
             var exceptionMessage = (message == null)

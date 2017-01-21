@@ -8,6 +8,6 @@ namespace Raspberry.IO.Interop
         public MemoryMapFailedException() {}
         public MemoryMapFailedException(string message) : base(message) {}
         public MemoryMapFailedException(string message, Exception innerException) : base(message, innerException) {}
-        protected MemoryMapFailedException(SerializationInfo info, StreamingContext context) : base(info, context) {}
+      
     }
 }

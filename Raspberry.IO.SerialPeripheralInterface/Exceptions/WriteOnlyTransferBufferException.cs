@@ -10,7 +10,6 @@ namespace Raspberry.IO.SerialPeripheralInterface
         public WriteOnlyTransferBufferException() {}
         public WriteOnlyTransferBufferException(string message) : base(message) {}
         public WriteOnlyTransferBufferException(string message, Exception innerException) : base(message, innerException) {}
-        protected WriteOnlyTransferBufferException(SerializationInfo info, StreamingContext context) : base(info, context) {}
     }
 #pragma warning restore 1591
 }

@@ -10,7 +10,6 @@ namespace Raspberry.IO.SerialPeripheralInterface
         public ReadOnlyTransferBufferException() {}
         public ReadOnlyTransferBufferException(string message) : base(message) {}
         public ReadOnlyTransferBufferException(string message, Exception innerException) : base(message, innerException) {}
-        protected ReadOnlyTransferBufferException(SerializationInfo info, StreamingContext context) : base(info, context) {}
     }
 #pragma warning restore 1591
 }

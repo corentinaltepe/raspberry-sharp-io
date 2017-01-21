@@ -41,7 +41,7 @@ namespace Raspberry.IO.Components.Controllers.Tlc59711
             var minimumRequiredMemorySize = (numberOfDevices * COMMAND_SIZE);
             if (memory.Length < minimumRequiredMemorySize) {
                 var message = string.Format("For {0} device(s) you have to provide a minimum of {1} bytes of memory.", numberOfDevices, minimumRequiredMemorySize);
-                throw new InsufficientMemoryException(message);
+                throw new OutOfMemoryException(message);
             }
             
             devices = CreateDevices(memory, numberOfDevices).ToArray();

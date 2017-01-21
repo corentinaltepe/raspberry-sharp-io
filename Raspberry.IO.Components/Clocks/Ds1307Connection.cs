@@ -150,6 +150,27 @@ namespace Raspberry.IO.Components.Clocks.Ds1307
         }
 
         /// <summary>
+        /// Convert Bitarrray to Byte
+        /// </summary>
+        /// <param name="bits"></param>
+        /// <returns></returns>
+        public byte ConvertToByte(BitArray bits)
+        {
+            if (bits.Length + 1 > 8)
+                throw new ArgumentException("ConvertToByte can only work with a BitArray containing a maximum of 8 values");
+
+            byte result = 0;
+
+            for (byte i = 0; i < bits.Length + 1; i++)
+            {
+                if (bits[i])
+                    result |= (byte)(1 << i);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Disables or enables the Clock.
         /// </summary>
         /// <param name="seconds">The byte that contains the seconds and the CH-Flag.</param>
@@ -161,10 +182,7 @@ namespace Raspberry.IO.Components.Clocks.Ds1307
             BitArray bits = new BitArray(new byte[] { seconds });
             bits.Set(7, disable);
 
-            byte[] result = new byte[1];
-            bits.CopyTo(result, 0);
-
-            return result[0];
+            return ConvertToByte(bits);
         }
 
         /// <summary>

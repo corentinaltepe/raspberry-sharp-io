@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 #endregion
 
@@ -34,7 +35,7 @@ namespace Raspberry.IO.GeneralPurpose
         /// </summary>
         public FileGpioConnectionDriver()
         {
-            if (Environment.OSVersion.Platform != PlatformID.Unix)
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 throw new NotSupportedException("FileGpioConnectionDriver is only supported in Unix");
         }
 
@@ -60,7 +61,8 @@ namespace Raspberry.IO.GeneralPurpose
             return GpioConnectionDriverCapabilities.None;
         }
 
-        /// <summary>
+
+              /// <summary>
         /// Allocates the specified pin.
         /// </summary>
         /// <param name="pin">The pin.</param>
@@ -69,9 +71,8 @@ namespace Raspberry.IO.GeneralPurpose
         {
             Release(pin);
 
-            using (var streamWriter = new StreamWriter(Path.Combine(gpioPath, "export"), false))
-                streamWriter.Write((int)pin);
-
+            HelperFileStream.SaveToFile(Path.Combine(gpioPath, "export"), (int)pin);
+            
             if (!gpioPathList.ContainsKey(pin))
             {
                 var gpio = new FileGpioHandle { GpioPath = GuessGpioPath(pin) };
@@ -145,12 +146,11 @@ namespace Raspberry.IO.GeneralPurpose
         {
             if (gpioPathList.ContainsKey(pin) && gpioPathList[pin].GpioStream != null)
             {
-                gpioPathList[pin].GpioStream.Close();
+                gpioPathList[pin].GpioStream.Flush();
                 gpioPathList[pin].GpioStream = null;
             } 
             if (Directory.Exists(GuessGpioPath(pin)))
-                using (var streamWriter = new StreamWriter(Path.Combine(gpioPath, "unexport"), false))
-                    streamWriter.Write((int)pin);
+                HelperFileStream.SaveToFile(Path.Combine(gpioPath, "unexport"), (int)pin);
         }
 
         /// <summary>
@@ -201,11 +201,9 @@ namespace Raspberry.IO.GeneralPurpose
         #region Private Helpers
 
         private static void SetPinDirection(string fullFilePath, PinDirection direction) {
-            using (var streamWriter = new StreamWriter(fullFilePath, false)) {
-                streamWriter.Write(direction == PinDirection.Input
+            HelperFileStream.SaveToFile(fullFilePath, direction == PinDirection.Input
                                    ? "in"
                                    : "out");
-            }
         }
 
         private static string GuessGpioPath(ProcessorPin pin)

@@ -6,11 +6,11 @@
 
 
 using System;
-using Common.Logging;
 using Raspberry.IO.InterIntegratedCircuit;
 using Raspberry.Timers;
 using UnitsNet;
 using System.IO;
+using Microsoft.Extensions.Logging;
 
 namespace Raspberry.IO.Components.Controllers.HT16K33
 {
@@ -48,8 +48,8 @@ namespace Raspberry.IO.Components.Controllers.HT16K33
 		const byte HT16K33_Oscillator		= 0x01;
 		const byte HT16K33_DisplayOn		= 0x01;
 
-        private readonly I2cDeviceConnection connection;       
-		private static readonly ILog log = LogManager.GetLogger<HT16K33Connection>();
+        private readonly I2cDeviceConnection connection;   
+        private ILogger log;
 
         public byte[] LEDBuffer {get; private set;}  //Max 16 rows, 8 bits (leds)
 
@@ -64,8 +64,13 @@ namespace Raspberry.IO.Components.Controllers.HT16K33
         {
 			LEDBuffer = new byte[RowCount];
             this.connection = connection;
-			
-			log.Info(m => m("Resetting HT16K33"));
+
+            ILoggerFactory loggerFactory = new LoggerFactory()
+                .AddConsole()
+                .AddDebug();
+            log = loggerFactory.CreateLogger<HT16K33Connection>();
+
+            log.LogInformation("Resetting HT16K33");
 
 			connection.Write((byte)Command.System_Setup | (byte)HT16K33_Oscillator); //Turn on the oscillator.
 			connection.Write((byte)Command.Flash | (byte)HT16K33_DisplayOn | (byte)Flash.Off);

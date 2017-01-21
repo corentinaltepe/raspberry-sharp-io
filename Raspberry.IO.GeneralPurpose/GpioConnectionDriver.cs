@@ -97,22 +97,18 @@ namespace Raspberry.IO.GeneralPurpose
             var gpioId = string.Format("gpio{0}", (int)pin);
             if (Directory.Exists(Path.Combine(gpioPath, gpioId)))
             {
-                // Reinitialize pin virtual file
-                using (var streamWriter = new StreamWriter(Path.Combine(gpioPath, "unexport"), false))
-                    streamWriter.Write((int) pin);
+                HelperFileStream.SaveToFile(Path.Combine(gpioPath, "unexport"), (int)pin);
             }
 
             // Export pin for file mode
-            using (var streamWriter = new StreamWriter(Path.Combine(gpioPath, "export"), false))
-                streamWriter.Write((int)pin);
+            HelperFileStream.SaveToFile(Path.Combine(gpioPath, "export"), (int)pin);
 
             // Set the direction on the pin and update the exported list
             SetPinMode(pin, direction == PinDirection.Input ? Interop.BCM2835_GPIO_FSEL_INPT : Interop.BCM2835_GPIO_FSEL_OUTP);
 
             // Set direction in pin virtual file
             var filePath = Path.Combine(gpioId, "direction");
-            using (var streamWriter = new StreamWriter(Path.Combine(gpioPath, filePath), false))
-                streamWriter.Write(direction == PinDirection.Input ? "in" : "out");
+            HelperFileStream.SaveToFile(Path.Combine(gpioPath, filePath), direction == PinDirection.Input ? "in" : "out");
 
             if (direction == PinDirection.Input)
             {
@@ -186,8 +182,7 @@ namespace Raspberry.IO.GeneralPurpose
         public void SetPinDetectedEdges(ProcessorPin pin, PinDetectedEdges edges)
         {
             var edgePath = Path.Combine(gpioPath, string.Format("gpio{0}/edge", (int)pin));
-            using (var streamWriter = new StreamWriter(edgePath, false))
-                streamWriter.Write(ToString(edges));
+            HelperFileStream.SaveToFile(edgePath, ToString(edges));
         }
 
         /// <summary>
@@ -230,8 +225,7 @@ namespace Raspberry.IO.GeneralPurpose
         public void Release(ProcessorPin pin)
         {
             UninitializePoll(pin);
-            using (var streamWriter = new StreamWriter(Path.Combine(gpioPath, "unexport"), false))
-                streamWriter.Write((int)pin);
+            HelperFileStream.SaveToFile(Path.Combine(gpioPath, "unexport"), (int)pin);
 
             SetPinMode(pin, Interop.BCM2835_GPIO_FSEL_INPT);
         }
@@ -243,8 +237,8 @@ namespace Raspberry.IO.GeneralPurpose
         /// <param name="value">The pin status.</param>
         public void Write(ProcessorPin pin, bool value)
         {
-            int shift;
-            var offset = Math.DivRem((int)pin, 32, out shift);
+            var offset = (int)pin / 32; 
+            int shift = (int)pin % 32;
 
             var pinGroupAddress = gpioAddress + (int)((value ? Interop.BCM2835_GPSET0 : Interop.BCM2835_GPCLR0) + offset);
             SafeWriteUInt32(pinGroupAddress, (uint)1 << shift);
@@ -259,8 +253,8 @@ namespace Raspberry.IO.GeneralPurpose
         /// </returns>
         public bool Read(ProcessorPin pin)
         {
-            int shift;
-            var offset = Math.DivRem((int)pin, 32, out shift);
+            var offset = (int)pin / 32;
+            int shift = (int)pin % 32;
 
             var pinGroupAddress = gpioAddress + (int)(Interop.BCM2835_GPLEV0 + offset);
             var value = SafeReadUInt32(pinGroupAddress);
@@ -388,8 +382,8 @@ namespace Raspberry.IO.GeneralPurpose
 
         private void SetPinResistorClock(ProcessorPin pin, bool on)
         {
-            int shift;
-            var offset = Math.DivRem((int)pin, 32, out shift);
+            var offset = (int)pin / 32;
+            int shift = (int)pin % 32;
 
             var clockAddress = gpioAddress + (int)(Interop.BCM2835_GPPUDCLK0 + offset);
             SafeWriteUInt32(clockAddress, (uint)(on ? 1 : 0) << shift);

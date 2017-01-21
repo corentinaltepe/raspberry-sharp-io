@@ -2,9 +2,9 @@
 
 using System;
 using System.Globalization;
-using Common.Logging;
 using Raspberry.IO.GeneralPurpose;
 using Raspberry.Timers;
+using Microsoft.Extensions.Logging;
 
 #endregion
 
@@ -125,11 +125,14 @@ namespace Raspberry.IO.Components.Sensors.Temperature.Dht
                 }
                 catch(Exception ex)
                 {
-                    var logger = LogManager.GetLogger<DhtConnection>();
-                    logger.Error(
-                        CultureInfo.InvariantCulture,
-                        h => h("Failed to read data from DHT11, try {0}", tryCount), 
-                        ex);
+     
+
+                    ILoggerFactory loggerFactory = new LoggerFactory()
+                   .AddConsole()
+                   .AddDebug();
+                    ILogger log = loggerFactory.CreateLogger<DhtConnection>();
+
+                    log.LogError(null, ex, $"Failed to read data from DHT11, try {tryCount}");
                 }
             }
 

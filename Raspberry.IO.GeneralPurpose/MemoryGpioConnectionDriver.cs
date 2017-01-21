@@ -199,8 +199,8 @@ namespace Raspberry.IO.GeneralPurpose
         /// <param name="value">The pin status.</param>
         public void Write(ProcessorPin pin, bool value)
         {
-            int shift;
-            var offset = Math.DivRem((int)pin, 32, out shift);
+            var offset = (int)pin / 32;
+            int shift = (int)pin % 32;
 
             var pinGroupAddress = gpioAddress + (int)((value ? Interop.BCM2835_GPSET0 : Interop.BCM2835_GPCLR0) + offset);
             SafeWriteUInt32(pinGroupAddress, (uint) 1 << shift);
@@ -215,8 +215,8 @@ namespace Raspberry.IO.GeneralPurpose
         /// </returns>
         public bool Read(ProcessorPin pin)
         {
-            int shift;
-            var offset = Math.DivRem((int) pin, 32, out shift);
+            var offset = (int)pin / 32;
+            int shift = (int)pin % 32;
 
             var pinGroupAddress = gpioAddress + (int) (Interop.BCM2835_GPLEV0 + offset);
             var value = SafeReadUInt32(pinGroupAddress);
@@ -260,8 +260,8 @@ namespace Raspberry.IO.GeneralPurpose
 
         private void SetPinResistorClock(ProcessorPin pin, bool on)
         {
-            int shift;
-            var offset = Math.DivRem((int)pin, 32, out shift);
+            var offset = (int)pin / 32;
+            int shift = (int)pin % 32;
 
             var clockAddress = gpioAddress + (int)(Interop.BCM2835_GPPUDCLK0 + offset);
             SafeWriteUInt32(clockAddress, (uint) (on ? 1 : 0) << shift);

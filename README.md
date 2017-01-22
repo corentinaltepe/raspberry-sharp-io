@@ -5,7 +5,7 @@ See the **[Raspberry\# IO Wiki](https://github.com/raspberry-sharp/raspberry-sha
 
 Introduction
 ------------
-Raspberry# IO is a .NET/Mono IO Library for Raspberry Pi. This project is an initiative of the [Raspberry#](http://www.raspberry-sharp.org) Community.
+Raspberry# IO is a .Net Standard and .NetCore IO Library for Raspberry Pi. This project is an initiative of the [Raspberry#](http://www.raspberry-sharp.org) Community.
 
 Current release is an early public release. Some features may not have been extensively tested.
 Raspberry# IO currently supports low- and high-level GPIO input/output, support for SPI and I2C peripherals.

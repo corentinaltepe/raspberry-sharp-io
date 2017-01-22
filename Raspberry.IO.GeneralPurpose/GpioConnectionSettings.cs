@@ -99,10 +99,8 @@ namespace Raspberry.IO.GeneralPurpose
         {
             get
             {
-                IConfigurationBuilder conf = new ConfigurationBuilder().AddJsonFile("AppConfig.json");
-                conf.Build().GetSection("gpioConnection");
-                
-                 var configurationSection = conf.Build().GetSection("gpioConnection") as GpioConnectionConfigurationSection;
+                GpioConnectionConfigurationSection configurationSection = HelperConfiguration.GetConfigurationFromJSON("AppConfig.json", "gpioConnection");
+
                 return TimeSpan.FromMilliseconds(configurationSection != null
                            ? (double)configurationSection.PollInterval
                            : (double)GpioConnectionConfigurationSection.DefaultPollInterval);
@@ -120,10 +118,7 @@ namespace Raspberry.IO.GeneralPurpose
         {
             get
             {
-                IConfigurationBuilder conf = new ConfigurationBuilder().AddJsonFile("AppConfig.json");
-                conf.Build().GetSection("gpioConnection");
-
-                var configurationSection = conf.Build().GetSection("gpioConnection") as GpioConnectionConfigurationSection;
+                GpioConnectionConfigurationSection configurationSection = HelperConfiguration.GetConfigurationFromJSON("AppConfig.json", "gpioConnection");
                 if (configurationSection != null)
                 {
                     switch (configurationSection.BoardConnectorRevision)
@@ -148,10 +143,7 @@ namespace Raspberry.IO.GeneralPurpose
         {
             get
             {
-                IConfigurationBuilder conf = new ConfigurationBuilder().AddJsonFile("AppConfig.json");
-                conf.Build().GetSection("gpioConnection");
-
-                var configurationSection = conf.Build().GetSection("gpioConnection") as GpioConnectionConfigurationSection;
+                GpioConnectionConfigurationSection configurationSection = HelperConfiguration.GetConfigurationFromJSON("AppConfig.json", "gpioConnection");
                 return (configurationSection != null && !String.IsNullOrEmpty(configurationSection.DriverTypeName))
                     ? (IGpioConnectionDriver) Activator.CreateInstance(Type.GetType(configurationSection.DriverTypeName, true))
                     : GetBestDriver(Board.Current.IsRaspberryPi ? GpioConnectionDriverCapabilities.None : GpioConnectionDriverCapabilities.CanWorkOnThirdPartyComputers);

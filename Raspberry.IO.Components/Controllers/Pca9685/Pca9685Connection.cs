@@ -36,10 +36,7 @@ namespace Raspberry.IO.Components.Controllers.Pca9685
         public Pca9685Connection(I2cDeviceConnection connection)
         {
             this.connection = connection;
-
-            ILoggerFactory loggerFactory = new LoggerFactory()
-           .AddConsole()
-           .AddDebug();
+            ILoggerFactory loggerFactory = new LoggerFactory().AddConsole().AddDebug();
             log = loggerFactory.CreateLogger<Pca9685Connection>();
 
             log.LogInformation("Resetting PCA9685");

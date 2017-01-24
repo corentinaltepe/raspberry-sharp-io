@@ -14,7 +14,8 @@ namespace Test.Gpio.PCA9685
     /// Demonstrates a connection to the Pca9685 LED controller - used by the Adafruit 16-channel PWM/Servo Shield
     /// </summary>
     /// <remarks>
-    /// Ported from https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code/blob/master/Adafruit_PWM_Servo_Driver/Servo_Example.py
+    /// 
+    /// Ported from https://github.com/adafruit/Adafruit_Python_PCA9685/blob/master/examples/simpletest.py
     /// </remarks>
     class Program
     {

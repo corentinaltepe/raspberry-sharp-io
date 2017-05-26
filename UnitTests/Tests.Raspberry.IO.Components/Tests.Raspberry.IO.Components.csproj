@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tests.Raspberry.IO.Components</RootNamespace>
     <AssemblyName>Tests.Raspberry.IO.Components</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FakeItEasy, Version=1.25.3.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
@@ -49,7 +51,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,8 +66,16 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Raspberry.IO.Components\Raspberry.IO.Components.csproj">
-      <Project>{8388CFCA-E3DB-43F7-B049-2CB195211CE8}</Project>
+      <Project>{4FFB8F2C-DB5D-4515-AE1B-696CDF22775E}</Project>
       <Name>Raspberry.IO.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Raspberry.IO.Interop\Raspberry.IO.Interop.csproj">
+      <Project>{6F9053CF-445B-46A5-9DF1-BF73A92BFC31}</Project>
+      <Name>Raspberry.IO.Interop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Raspberry.IO\Raspberry.IO.csproj">
+      <Project>{3b5dc795-7a82-4ec0-ab28-0b7f4f75870f}</Project>
+      <Name>Raspberry.IO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tests.Raspberry.IO\Tests.Raspberry.IO.csproj">
       <Project>{0BB6C3CE-422E-49F2-9165-DEC06AFE1B1A}</Project>

@@ -17,3 +17,4 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("05193a32-51b5-455e-9805-1c946a39bd6c")]
+[assembly:InternalsVisibleTo("Tests.Raspberry.IO.SerialPeripheralInterface")]

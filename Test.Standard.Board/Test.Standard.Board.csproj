@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Raspberry.IO.Components\Raspberry.IO.Components.csproj"/>
+    <ProjectReference Include="..\Raspberry.System\Raspberry.System.csproj" />
   </ItemGroup>
 
 </Project>

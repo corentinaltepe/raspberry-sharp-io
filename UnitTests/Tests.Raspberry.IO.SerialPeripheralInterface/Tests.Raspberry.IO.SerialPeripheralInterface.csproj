@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tests.Raspberry.IO.SerialPeripheralInterface</RootNamespace>
     <AssemblyName>Tests.Raspberry.IO.SerialPeripheralInterface</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <TargetFrameworkProfile />
@@ -38,13 +38,11 @@
       <HintPath>$(SolutionDir)packages\FakeItEasy.1.25.3\lib\net40\FakeItEasy.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentAssertions, Version=4.6.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\FluentAssertions.4.6.3\lib\net40\FluentAssertions.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="FluentAssertions, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.19.2\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.6.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\FluentAssertions.4.6.3\lib\net40\FluentAssertions.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="FluentAssertions.Core, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.19.2\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
@@ -65,6 +63,18 @@
     <Compile Include="SpiTransferBufferSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Raspberry.IO.Interop\Raspberry.IO.Interop.csproj">
+      <Project>{6F9053CF-445B-46A5-9DF1-BF73A92BFC31}</Project>
+      <Name>Raspberry.IO.Interop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Raspberry.IO.SerialPeripheralInterface\Raspberry.IO.SerialPeripheralInterface.csproj">
+      <Project>{05193a32-51b5-455e-9805-1c946a39bd6c}</Project>
+      <Name>Raspberry.IO.SerialPeripheralInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests.Raspberry.IO.Interop\Tests.Raspberry.IO.Interop.csproj">
+      <Project>{caf876a0-0fcb-44f7-96f1-53704cb6015f}</Project>
+      <Name>Tests.Raspberry.IO.Interop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tests.Raspberry.IO\Tests.Raspberry.IO.csproj">
       <Project>{0BB6C3CE-422E-49F2-9165-DEC06AFE1B1A}</Project>
       <Name>Tests.Raspberry.IO</Name>

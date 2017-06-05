@@ -303,6 +303,7 @@ namespace Raspberry.IO.InterIntegratedCircuit
                     return Interop.BCM2835_BSC1_BASE;
 
                 case Processor.Bcm2709:
+                case Processor.BCM2835: // <- added this one JJ FIX per RB3
                     return Interop.BCM2836_BSC1_BASE;
                 
                 default:
@@ -318,6 +319,7 @@ namespace Raspberry.IO.InterIntegratedCircuit
                     return Interop.BCM2835_GPIO_BASE;
 
                 case Processor.Bcm2709:
+                case Processor.BCM2835: // <- added this one JJ FIX per RB3
                     return Interop.BCM2836_GPIO_BASE;
 
                 default:
@@ -374,7 +376,7 @@ namespace Raspberry.IO.InterIntegratedCircuit
                     throw new InvalidOperationException("No I2C device exist on the specified pins");
 
                 default:
-                    throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Connector pinout {0} is not supported", GpioConnectionSettings.ConnectorPinout));
+                    throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Connector pintout {0} is not supported", GpioConnectionSettings.ConnectorPinout));
             }
         }
 

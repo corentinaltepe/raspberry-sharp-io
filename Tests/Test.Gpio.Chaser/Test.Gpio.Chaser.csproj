@@ -6,6 +6,7 @@
     <Copyright>Copyright © 2015</Copyright>
     <Description>Raspberry Pi Chaser GPIO Sample</Description>
     <Version>1.0.0.0</Version>
+    <NoWarn>1701;1702;1705;1591;419</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

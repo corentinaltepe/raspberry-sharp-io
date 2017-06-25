@@ -6,6 +6,7 @@
     <Copyright>Copyright © 2016</Copyright>
     <Version>1.0.0.0</Version>
     <Description>Raspberry Pi HD44780 Component Sample</Description>
+    <NoWarn>1701;1702;1705;1591;419</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

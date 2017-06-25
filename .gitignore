@@ -35,3 +35,4 @@ packages/*
 *.vsp
 *.vspx
 
+.vs/

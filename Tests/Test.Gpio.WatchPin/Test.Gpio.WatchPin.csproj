@@ -3,10 +3,17 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Copyright>Copyright © 2015</Copyright>
+    <Version>1.0.0.0</Version>
+    <Description>Raspberry Pi WatchPin Test</Description>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Raspberry.IO.GeneralPurpose\Raspberry.IO.GeneralPurpose.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

@@ -225,7 +225,7 @@ namespace Raspberry.IO.Interop
         /// <typeparam name="T">Structure type</typeparam>
         /// <returns>The unmanaged memory buffer of size <typeparamref name="T"/>.</returns>
         public static UnmanagedMemory CreateFor<T>() {
-            var requiredSize = Marshal.SizeOf(typeof(T));
+            var requiredSize = Marshal.SizeOf<T>();
             return new UnmanagedMemory(requiredSize);
         }
         #endregion

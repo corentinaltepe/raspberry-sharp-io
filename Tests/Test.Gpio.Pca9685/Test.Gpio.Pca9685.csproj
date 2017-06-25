@@ -3,12 +3,19 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Copyright>Copyright © 2015</Copyright>
+    <Version>1.0.0.0</Version>
+    <Description>Raspberry Pi Pca9685 Component Sample</Description>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Raspberry.IO.Components\Raspberry.IO.Components.csproj" />
     <ProjectReference Include="..\..\Raspberry.IO.GeneralPurpose\Raspberry.IO.GeneralPurpose.csproj" />
     <ProjectReference Include="..\..\Raspberry.IO.InterIntegratedCircuit\Raspberry.IO.InterIntegratedCircuit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

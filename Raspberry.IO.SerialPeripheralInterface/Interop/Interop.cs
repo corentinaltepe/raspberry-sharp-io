@@ -25,7 +25,7 @@ namespace Raspberry.IO.SerialPeripheralInterface
         public const UInt32 SPI_IOC_MESSAGE_BASE = 0x40006b00;
         public const int SPI_IOC_MESSAGE_NUMBER_SHIFT = 16;
 
-        private static readonly int transferMessageSize = Marshal.SizeOf(typeof(SpiTransferControlStructure));
+        private static readonly int transferMessageSize = Marshal.SizeOf<SpiTransferControlStructure>();
 
         internal static UInt32 GetSpiMessageRequest(int numberOfMessages) {
             var size = unchecked((UInt32)(transferMessageSize * numberOfMessages));

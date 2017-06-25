@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <Version>1.0.0</Version>
+    <TargetFramework>netstandard1.4</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Raspberry.System</AssemblyName>
     <PackageId>Raspberry.System</PackageId>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
     <NoWarn>1701;1702;1705;1591;419</NoWarn>
@@ -15,5 +14,11 @@
   <ItemGroup>
     <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
   </ItemGroup>
-
+  
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <ItemGroup>
+      <NugetPackages Include="bin\$(Configuration)\$(PackageId).$(PackageVersion)*.nupkg" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NugetPackages)" DestinationFolder="..\" />
+  </Target>
 </Project>

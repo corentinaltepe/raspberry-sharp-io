@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading;
 using Common.Logging;
-using NDesk.Options;
 using Raspberry.IO.Components.Controllers.Pca9685;
 using Raspberry.IO.GeneralPurpose;
 using Raspberry.IO.InterIntegratedCircuit;
 using UnitsNet;
+using Mono.Options;
 
 namespace Test.Gpio.PCA9685
 {

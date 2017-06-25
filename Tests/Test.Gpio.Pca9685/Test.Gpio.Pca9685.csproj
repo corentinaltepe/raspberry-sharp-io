@@ -18,4 +18,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Common.Logging" Version="3.4.0-Beta2" />
+    <PackageReference Include="Mono.Options.Core" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>

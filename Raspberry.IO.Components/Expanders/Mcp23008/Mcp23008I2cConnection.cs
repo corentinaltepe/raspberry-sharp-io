@@ -9,7 +9,7 @@ namespace Raspberry.IO.Components.Expanders.Mcp23008
     /// <summary>
     /// Represents a I2C connection to a MCP23008 I/O Expander.
     /// </summary>
-    /// <remarks>See <see cref="http://www.adafruit.com/datasheets/MCP23008.pdf"/> for more information.</remarks>
+    /// <remarks>See http://www.adafruit.com/datasheets/MCP23008.pdf for more information.</remarks>
     public class Mcp23008I2cConnection
     {
         #region Fields

@@ -15,8 +15,8 @@ namespace Raspberry.IO.Components.Sensors.Temperature.Dht
     /// </summary>
     /// <remarks>
     /// Requires a fast input/output switch (such as <see cref="MemoryGpioConnectionDriver"/>).
-    /// Based on <see href="https://www.virtuabotix.com/virtuabotix-dht22-pinout-coding-guide/"/>, <see cref="https://github.com/RobTillaart/Arduino/tree/master/libraries/DHTlib"/>
-    /// Datasheet : <see cref="http://www.micropik.com/PDF/dht11.pdf"/>.
+    /// Based on https://www.virtuabotix.com/virtuabotix-dht22-pinout-coding-guide/, https://github.com/RobTillaart/Arduino/tree/master/libraries/DHTlib
+    /// Datasheet : http://www.micropik.com/PDF/dht11.pdf .
     /// </remarks>
     public abstract class DhtConnection : IDisposable
     {

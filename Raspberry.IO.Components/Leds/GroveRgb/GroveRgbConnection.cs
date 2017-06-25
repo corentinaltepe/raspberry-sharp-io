@@ -10,7 +10,7 @@ namespace Raspberry.IO.Components.Leds.GroveRgb
 {
     /// <summary>
     /// Represents a connection with Grove Chainable RGB Led modules.
-    /// <see cref="http://www.seeedstudio.com/wiki/Grove_-_Chainable_RGB_LED" />
+    /// http://www.seeedstudio.com/wiki/Grove_-_Chainable_RGB_LED
     /// </summary>
     public class GroveRgbConnection: IDisposable
     {

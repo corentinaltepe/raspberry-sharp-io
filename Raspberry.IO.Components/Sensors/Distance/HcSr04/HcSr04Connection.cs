@@ -12,8 +12,8 @@ namespace Raspberry.IO.Components.Sensors.Distance.HcSr04
     /// Represents a connection to HC-SR04 distance sensor.
     /// </summary>
     /// <remarks>
-    ///     <see cref="https://docs.google.com/document/d/1Y-yZnNhMYy7rwhAgyL_pfa39RsB-x2qR4vP8saG73rE/edit"/> for hardware specification and 
-    ///     <see cref="http://www.raspberrypi-spy.co.uk/2012/12/ultrasonic-distance-measurement-using-python-part-1/"/> for implementation details.
+    /// See https://docs.google.com/document/d/1Y-yZnNhMYy7rwhAgyL_pfa39RsB-x2qR4vP8saG73rE/edit for hardware specification and 
+    /// See http://www.raspberrypi-spy.co.uk/2012/12/ultrasonic-distance-measurement-using-python-part-1/ for implementation details.
     /// </remarks>
     public class HcSr04Connection : IDisposable
     {

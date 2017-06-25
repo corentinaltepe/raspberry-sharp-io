@@ -11,7 +11,7 @@ namespace Raspberry.IO.Components.Expanders.Pcf8574
     /// <summary>
     /// Represents a I2C connection to a PCF8574 I/O Expander.
     /// </summary>
-    /// <remarks>See <see cref="http://www.ti.com/lit/ds/symlink/pcf8574.pdf"/> for more information.</remarks>
+    /// <remarks>See http://www.ti.com/lit/ds/symlink/pcf8574.pdf for more information.</remarks>
     public class Pcf8574I2cConnection
     {
         #region Fields

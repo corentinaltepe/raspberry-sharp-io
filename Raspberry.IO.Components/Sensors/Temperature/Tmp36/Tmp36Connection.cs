@@ -10,7 +10,7 @@ namespace Raspberry.IO.Components.Sensors.Temperature.Tmp36
     /// <summary>
     /// Represents a connection to a TMP36 temperature sensor.
     /// </summary>
-    /// <remarks>See <see cref="http://learn.adafruit.com/send-raspberry-pi-data-to-cosm"/>.</remarks>
+    /// <remarks>See http://learn.adafruit.com/send-raspberry-pi-data-to-cosm .</remarks>
     public class Tmp36Connection : IDisposable
     {
         #region Fields

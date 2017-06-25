@@ -14,7 +14,7 @@ namespace Raspberry.IO.Components.Sensors.Temperature.Ds18b20
     /// <summary>
     /// Represents a connection to a DS18B20 temperature sensor.
     /// </summary>
-    /// <remarks>See <see cref="https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing"/>.</remarks>
+    /// <remarks>See https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing .</remarks>
     public class Ds18b20Connection : IDisposable
     {
         #region Fields

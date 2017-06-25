@@ -9,7 +9,7 @@ namespace Raspberry.IO.Components.Expanders.Mcp23017
     /// <summary>
     /// Represents a I2C connection to a MCP23017 I/O Expander.
     /// </summary>
-    /// <remarks>See <see cref="http://www.adafruit.com/datasheets/mcp23017.pdf"/> for more information.</remarks>
+    /// <remarks>See http://www.adafruit.com/datasheets/mcp23017.pdf for more information.</remarks>
     public class Mcp23017I2cConnection
     {
         #region Fields

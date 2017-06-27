@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents data from a <see cref="Bmp085I2cConnection"/>.
     /// </summary>
-    public struct Bmp085Data
+    public struct BmpData
     {
         public UnitsNet.Temperature Temperature;
         public UnitsNet.Pressure Pressure;

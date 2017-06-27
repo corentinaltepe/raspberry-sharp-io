@@ -92,7 +92,7 @@ namespace Raspberry.IO.Components.Sensors.Pressure.Bmp085
         /// Gets the data.
         /// </summary>
         /// <returns>The data.</returns>
-        public Bmp085Data GetData()
+        public BmpData GetData()
         {
             var rawTemperature = GetRawTemperature();
             var rawPressure = GetRawPressure();
@@ -124,7 +124,7 @@ namespace Raspberry.IO.Components.Sensors.Pressure.Bmp085
             x1 = (x1*3038) >> 16;
             x2 = (-7357*p) >> 16;
 
-            return new Bmp085Data
+            return new BmpData
             {
                 Pressure = UnitsNet.Pressure.FromPascals(p + ((x1 + x2 + 3791) >> 4)),
                 Temperature = UnitsNet.Temperature.FromDegreesCelsius((double)((b5 + 8) >> 4) / 10)

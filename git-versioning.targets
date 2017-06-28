@@ -1,0 +1,15 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="GetAssemblyVersion2" AfterTargets="GetAssemblyVersion" BeforeTargets="GetAssemblyAttributes">
+    <Exec Command="git rev-parse HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitCommitHash" />
+    </Exec>
+    <PropertyGroup>
+      <VersionPattern>^v?(?&lt;major&gt;0|[1-9][0-9]*)\.(?&lt;minor&gt;0|[1-9][0-9]*)(?:\.(?&lt;patch&gt;0|[1-9][0-9]*)(?:\.(?&lt;revision&gt;0|[1-9][0-9]*))?)?(?&lt;prerelease&gt;-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?&lt;buildMetadata&gt;\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$</VersionPattern>
+      <OldInformationalVersion>$(InformationalVersion)</OldInformationalVersion>
+      <RevisonNumber>
+        $([System.DateTime]::UtcNow.Subtract($([System.DateTime]::Parse("1970-01-01T00:00:00.0000000Z").ToUniversalTime())).TotalDays.ToString("F0"))</RevisonNumber>
+      <InformationalVersion>$(Version). Commit Hash: $(GitCommitHash.Substring(0,7))</InformationalVersion>
+    </PropertyGroup>
+  </Target>
+</Project>

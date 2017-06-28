@@ -1,7 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Version>1.0.0</Version>
     <TargetFramework>netstandard1.4</TargetFramework>
+    <Authors>Raspberry-Sharp</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Raspberry.IO.SerialPeripheralInterface</AssemblyName>
     <PackageId>Raspberry.IO.SerialPeripheralInterface</PackageId>
@@ -20,4 +22,12 @@
     <ProjectReference Include="..\Raspberry.System\Raspberry.System.csproj" />
   </ItemGroup>
 
+  <Import Project="../git-versioning.targets" />
+
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <ItemGroup>
+      <NugetPackages Include="bin\$(Configuration)\$(PackageId).$(PackageVersion)*.nupkg" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NugetPackages)" DestinationFolder="..\" />
+  </Target>
 </Project>

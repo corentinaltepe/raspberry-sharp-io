@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.0.0</Version>
+    <Version>2.5.0</Version>
     <TargetFramework>netstandard1.4</TargetFramework>
+    <Authors>Raspberry-Sharp</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Raspberry.IO</AssemblyName>
     <PackageId>Raspberry.IO</PackageId>
@@ -11,6 +12,8 @@
     <IncludeSource>True</IncludeSource>
     <NoWarn>1701;1702;1705;1591;419</NoWarn>
   </PropertyGroup>
+
+  <Import Project="../git-versioning.targets" />
 
   <Target Name="CopyPackage" AfterTargets="Pack">
     <ItemGroup>

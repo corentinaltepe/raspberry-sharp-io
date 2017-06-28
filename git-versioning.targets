@@ -7,9 +7,21 @@
     <PropertyGroup>
       <VersionPattern>^v?(?&lt;major&gt;0|[1-9][0-9]*)\.(?&lt;minor&gt;0|[1-9][0-9]*)(?:\.(?&lt;patch&gt;0|[1-9][0-9]*)(?:\.(?&lt;revision&gt;0|[1-9][0-9]*))?)?(?&lt;prerelease&gt;-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?&lt;buildMetadata&gt;\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$</VersionPattern>
       <OldInformationalVersion>$(InformationalVersion)</OldInformationalVersion>
-      <RevisonNumber>
-        $([System.DateTime]::UtcNow.Subtract($([System.DateTime]::Parse("1970-01-01T00:00:00.0000000Z").ToUniversalTime())).TotalDays.ToString("F0"))</RevisonNumber>
-      <InformationalVersion>$(Version). Commit Hash: $(GitCommitHash.Substring(0,7))</InformationalVersion>
+      <OldVersion>$(InformationalVersion)</OldVersion>
+      <VersionMajor>$([System.Text.RegularExpressions.Regex]::Match($(Version), $(VersionPattern)).Groups["major"].Value)</VersionMajor>
+      <VersionMinor>$([System.Text.RegularExpressions.Regex]::Match($(Version), $(VersionPattern)).Groups["minor"].Value)</VersionMinor>
+      <VersionPatch>$([System.Text.RegularExpressions.Regex]::Match($(Version), $(VersionPattern)).Groups["patch"].Value)</VersionPatch>
+      <VersionRevision>$([System.Text.RegularExpressions.Regex]::Match($(Version), $(VersionPattern)).Groups["revision"].Value)</VersionRevision>
+      <VersionPreRelease>$([System.Text.RegularExpressions.Regex]::Match($(Version), $(VersionPattern)).Groups["prerelease"].Value)</VersionPreRelease>
+      <VersionMajor Condition=" '$(VersionMajor)' == '' ">0</VersionMajor>
+      <VersionMinor Condition=" '$(VersionMinor)' == '' ">0</VersionMinor>
+      <VersionPatch Condition=" '$(VersionPatch)' == '' ">0</VersionPatch>
+      <VersionPreRelease Condition=" '$(VersionPreRelease)' != '' ">-$(VersionPreRelease)</VersionPreRelease>
+      <VersionRevision Condition=" '$(VersionRevision)' == '' Or '$(VersionRevision)' == 0 ">$([System.DateTime]::UtcNow.Subtract($([System.DateTime]::Parse("1970-01-01T00:00:00.0000000Z").ToUniversalTime())).TotalDays.ToString("F0"))</VersionRevision>
+      <!-- <InformationalVersion>$(Version). Commit Hash: $(GitCommitHash.Substring(0,7))</InformationalVersion> -->
+      <Version>$(VersionMajor).$(VersionMinor).$(VersionPatch).$(VersionRevision)$(VersionPreRelease)</Version>
+      <InformationalVersion>$(Version)-g$(GitCommitHash.Substring(0,7))</InformationalVersion>
+      <PackageVersion>$(Version)-g$(GitCommitHash.Substring(0,7))</PackageVersion>
     </PropertyGroup>
   </Target>
 </Project>

@@ -58,7 +58,7 @@ namespace Raspberry.IO.GeneralPurpose
         /// <param name="pins">The pins.</param>
         public GpioConnection(GpioConnectionSettings settings, IEnumerable<PinConfiguration> pins)
         {
-            this.settings = settings ?? new GpioConnectionSettings();
+            this.settings = settings;
             Pins = new ConnectedPins(this);
 
             var pinList = pins.ToList();

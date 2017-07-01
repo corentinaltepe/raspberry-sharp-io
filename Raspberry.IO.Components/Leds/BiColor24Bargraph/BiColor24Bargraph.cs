@@ -25,7 +25,7 @@ namespace Raspberry.IO.Components.Leds.BiColor24Bargraph
 		/// Initializes a new instance of the <see cref="Raspberry.IO.Components.Leds.BiColor24Bargraph.BiColor24Bargraph"/> class.
 		/// </summary>
 		/// <param name="connection">I2c Connection.</param>
-		public BiColor24Bargraph (I2cDeviceConnection connection) : base (connection,6)
+		public BiColor24Bargraph (IServiceProvider serviceProvider, I2cDeviceConnection connection) : base (serviceProvider, connection, 6)
 		{
 		}
 

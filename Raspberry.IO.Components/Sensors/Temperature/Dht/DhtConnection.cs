@@ -5,6 +5,7 @@ using System.Globalization;
 using Raspberry.IO.GeneralPurpose;
 using Raspberry.Timers;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
@@ -31,6 +32,8 @@ namespace Raspberry.IO.Components.Sensors.Temperature.Dht
         private static readonly TimeSpan timeout = TimeSpan.FromMilliseconds(100);
         private static readonly TimeSpan bitSetUptime = new TimeSpan(10 * (26 +70) / 2); // 26µs for "0", 70µs for "1"
 
+        private ILogger log;
+
         #endregion
 
         #region Instance Management
@@ -38,10 +41,13 @@ namespace Raspberry.IO.Components.Sensors.Temperature.Dht
         /// <summary>
         /// Initializes a new instance of the <see cref="DhtConnection" /> class.
         /// </summary>
+        /// <param name="serviceProvider">IServiceProvider</param>
         /// <param name="pin">The pin.</param>
         /// <param name="autoStart">if set to <c>true</c>, DHT is automatically started. Default value is <c>true</c>.</param>
-        protected DhtConnection(IInputOutputBinaryPin pin, bool autoStart = true)
+        protected DhtConnection(IServiceProvider serviceProvider, IInputOutputBinaryPin pin, bool autoStart = true)
         {
+            log = serviceProvider.GetRequiredService<ILogger<DhtConnection>>();
+
             this.pin = pin;
 
             if (autoStart)
@@ -125,13 +131,6 @@ namespace Raspberry.IO.Components.Sensors.Temperature.Dht
                 }
                 catch(Exception ex)
                 {
-     
-
-                    ILoggerFactory loggerFactory = new LoggerFactory()
-                   .AddConsole()
-                   .AddDebug();
-                    ILogger log = loggerFactory.CreateLogger<DhtConnection>();
-
                     log.LogError(null, ex, $"Failed to read data from DHT11, try {tryCount}");
                 }
             }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Raspberry.IO.InterIntegratedCircuit;
 using Raspberry.Timers;
 using UnitsNet;
+using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
@@ -24,20 +25,20 @@ namespace Raspberry.IO.Components.Controllers.Pca9685
 
         private ILogger log;
         private static readonly TimeSpan delay = TimeSpan.FromMilliseconds(5);
-        
+
         #endregion
-        
+
         #region Instance Management
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pca9685Connection"/> class.
         /// </summary>
+        /// <param name="serviceProvider">IServiceProvider</param>
         /// <param name="connection">The I2C connection.</param>
-        public Pca9685Connection(I2cDeviceConnection connection)
+        public Pca9685Connection(IServiceProvider serviceProvider, I2cDeviceConnection connection)
         {
             this.connection = connection;
-            ILoggerFactory loggerFactory = new LoggerFactory().AddConsole().AddDebug();
-            log = loggerFactory.CreateLogger<Pca9685Connection>();
+            log = serviceProvider.GetRequiredService<ILogger<Pca9685Connection>>();
 
             log.LogInformation("Resetting PCA9685");
 

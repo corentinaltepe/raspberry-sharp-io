@@ -17,9 +17,10 @@ namespace Raspberry.IO.Components.Sensors.Temperature.Dht
         /// <summary>
         /// Initializes a new instance of the <see cref="DhtConnection" /> class.
         /// </summary>
+        /// <param name="serviceProvider">IServiceProvider</param>
         /// <param name="pin">The pin.</param>
         /// <param name="autoStart">if set to <c>true</c>, DHT is automatically started. Default value is <c>true</c>.</param>
-        public Dht11Connection(IInputOutputBinaryPin pin, bool autoStart = true) : base(pin, autoStart) { }
+        public Dht11Connection(IServiceProvider serviceProvider, IInputOutputBinaryPin pin, bool autoStart = true) : base(serviceProvider, pin, autoStart) { }
 
         #endregion
 

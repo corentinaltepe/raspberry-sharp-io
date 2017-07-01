@@ -7,7 +7,7 @@ namespace Raspberry.IO.GeneralPurpose.Configuration
     /// <summary>
     /// Represents the configuration of the GPIO connection.
     /// </summary>
-    public class GpioConnectionConfigurationSection : ConfigurationSection
+    public class GpioConnectionConfigurationSection
     {
         #region Constants
 
@@ -15,17 +15,7 @@ namespace Raspberry.IO.GeneralPurpose.Configuration
         /// The default poll interval, in milliseconds.
         /// </summary>
         public const decimal DefaultPollInterval = 50.0m;
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="root"></param>
-        /// <param name="path"></param>
-        public GpioConnectionConfigurationSection(ConfigurationRoot root, string path) : base(root, path)
-        {
-        }
-
-
+        
         #endregion
 
         #region Properties
@@ -36,10 +26,10 @@ namespace Raspberry.IO.GeneralPurpose.Configuration
         /// <value>
         /// The name of the driver type.
         /// </value>
-        public string DriverTypeName
+        public string Driver
         {
-            get { return (string) this["driver"]; }
-            set { this["driver"] = value; }
+            get;
+            set;
         }
 
         /// <summary>
@@ -50,8 +40,8 @@ namespace Raspberry.IO.GeneralPurpose.Configuration
         /// </value>
         public int BoardConnectorRevision
         {
-            get { return int.Parse(this["boardConnectorRevision"]); }
-            set { this["boardConnectorRevision"] = value.ToString(); }
+            get;
+            set;
         }
 
         /// <summary>
@@ -66,8 +56,8 @@ namespace Raspberry.IO.GeneralPurpose.Configuration
         /// </remarks>
         public decimal PollInterval
         {
-            get { return decimal.Parse(this["pollInterval"]); }
-            set { this["pollInterval"] = value.ToString(); }
+            get;
+            set;
         }
 
         #endregion

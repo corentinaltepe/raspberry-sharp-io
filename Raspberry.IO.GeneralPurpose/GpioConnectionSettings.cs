@@ -2,7 +2,6 @@
 
 using System;
 using Raspberry.IO.GeneralPurpose.Configuration;
-using Microsoft.Extensions.Configuration;
 
 #endregion
 
@@ -27,6 +26,7 @@ namespace Raspberry.IO.GeneralPurpose
         /// <summary>
         /// Initializes a new instance of the <see cref="GpioConnectionSettings"/> class.
         /// </summary>
+        //public GpioConnectionSettings(IOptions<GpioConnectionConfigurationSection> configurationSection)
         public GpioConnectionSettings()
         {
             Driver = DefaultDriver;
@@ -99,12 +99,7 @@ namespace Raspberry.IO.GeneralPurpose
         {
             get
             {
-                GpioConnectionConfigurationSection configurationSection = HelperConfiguration.GetConfigurationFromJSON("AppConfig.json", "gpioConnection");
-
-                return TimeSpan.FromMilliseconds(configurationSection != null
-                           ? (double)configurationSection.PollInterval
-                           : (double)GpioConnectionConfigurationSection.DefaultPollInterval);
-
+                return TimeSpan.FromMilliseconds((double)GpioConnectionConfigurationSection.DefaultPollInterval);
             }
         }
 
@@ -118,20 +113,6 @@ namespace Raspberry.IO.GeneralPurpose
         {
             get
             {
-                GpioConnectionConfigurationSection configurationSection = HelperConfiguration.GetConfigurationFromJSON("AppConfig.json", "gpioConnection");
-                if (configurationSection != null)
-                {
-                    switch (configurationSection.BoardConnectorRevision)
-                    {
-                        case 1:
-                            return ConnectorPinout.Rev1;
-                        case 2:
-                            return ConnectorPinout.Rev2;
-                        case 3:
-                            return ConnectorPinout.Plus;
-                    }
-                }
-
                 return Board.Current.ConnectorPinout;
             }
         }
@@ -143,10 +124,7 @@ namespace Raspberry.IO.GeneralPurpose
         {
             get
             {
-                GpioConnectionConfigurationSection configurationSection = HelperConfiguration.GetConfigurationFromJSON("AppConfig.json", "gpioConnection");
-                return (configurationSection != null && !String.IsNullOrEmpty(configurationSection.DriverTypeName))
-                    ? (IGpioConnectionDriver) Activator.CreateInstance(Type.GetType(configurationSection.DriverTypeName, true))
-                    : GetBestDriver(Board.Current.IsRaspberryPi ? GpioConnectionDriverCapabilities.None : GpioConnectionDriverCapabilities.CanWorkOnThirdPartyComputers);
+                return GetBestDriver(Board.Current.IsRaspberryPi ? GpioConnectionDriverCapabilities.None : GpioConnectionDriverCapabilities.CanWorkOnThirdPartyComputers);
             }
         }
 

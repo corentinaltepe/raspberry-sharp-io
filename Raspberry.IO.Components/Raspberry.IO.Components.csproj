@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Version>2.5.0</Version>
@@ -21,7 +21,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="1.1.1" />
-    <PackageReference Include="UnitsNet" Version="3.49.1" />
+    <PackageReference Include="UnitsNet" Version="3.64.0" />
   </ItemGroup>
 
   <Import Project="../git-versioning.targets" />

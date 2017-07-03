@@ -32,10 +32,9 @@ namespace Raspberry
 
         private Board(Dictionary<string, string> settings)
         {
+            this.settings = settings;
             model = new Lazy<Model>(LoadModel);
             connectorPinout = new Lazy<ConnectorPinout>(LoadConnectorPinout);
-            
-            this.settings = settings;
         }
 
         #endregion
@@ -163,6 +162,11 @@ namespace Raspberry
         public ConnectorPinout ConnectorPinout
         {
             get { return connectorPinout.Value; }
+        }
+
+        public override string ToString()
+        {
+            return settings.ToString();
         }
 
         #endregion

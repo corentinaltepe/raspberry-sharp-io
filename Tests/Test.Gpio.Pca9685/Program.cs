@@ -7,6 +7,8 @@ using Raspberry.IO.GeneralPurpose;
 using Raspberry.IO.InterIntegratedCircuit;
 using UnitsNet;
 using Mono.Options;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Test.Gpio.PCA9685
 {
@@ -19,7 +21,7 @@ namespace Test.Gpio.PCA9685
     /// </remarks>
     class Program
     {
-        private static readonly ILog log = LogManager.GetLogger<Program>();
+        private static ILogger<Program> log;
 
         static void Main(string[] args)
         {
@@ -27,45 +29,52 @@ namespace Test.Gpio.PCA9685
             if (options == null)
                 return;
 
-            log.Info("-=Pca9685 Sample=-");
-            log.Info(m => m("Running {0}", Environment.OSVersion));
-            log.Info("Options:" + Environment.NewLine + options);
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging();
+
+            var sp = serviceCollection.BuildServiceProvider();
+            sp.GetRequiredService<LoggerFactory>().AddConsole().AddDebug();
+            log = sp.GetRequiredService<ILogger<Program>>();
+
+            log.LogInformation("-=Pca9685 Sample=-");
+            log.LogInformation("Running {0}", System.Runtime.InteropServices.RuntimeInformation.OSDescription);
+            log.LogInformation("Options:" + Environment.NewLine + options);
 
             var pulse = CalculatePulse(options.PwmFrequency, 50);
-            log.Info(m => m("Pulse={0}", pulse));
+            log.LogInformation("Pulse={0}", pulse);
 
-            if (Environment.OSVersion.Platform != PlatformID.Unix)
+            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
             {
-                log.Warn("Windows detected. Exiting");
+                log.LogWarning("Windows detected. Exiting");
                 return;
             }
-            
-            log.Info("Connecting...");
+
+            log.LogInformation("Connecting...");
 
             try
             {
                 using (var driver = new I2cDriver(options.SdaPin.ToProcessor(), options.SclPin.ToProcessor()))
                 {
-                    log.Info("Creating device...");
-                    var device = new Pca9685Connection(driver.Connect(options.DeviceAddress));
+                    log.LogInformation("Creating device...");
+                    var device = new Pca9685Connection(sp, driver.Connect(options.DeviceAddress));
 
-                    log.Info("Setting frequency...");
+                    log.LogInformation("Setting frequency...");
                     device.SetPwmUpdateRate(options.PwmFrequency);
                     while (!Console.KeyAvailable)
                     {
-                        log.Info(m => m("Set channel={0} to {1}", options.Channel, options.PwmOn));
+                        log.LogInformation("Set channel={0} to {1}", options.Channel, options.PwmOn);
                         device.SetPwm(options.Channel, 0, options.PwmOn);
                         Thread.Sleep(1000);
-                        log.Info(m => m("Set channel={0} to {1}", options.Channel, options.PwmOff));
+                        log.LogInformation("Set channel={0} to {1}", options.Channel, options.PwmOff);
                         device.SetPwm(options.Channel, 0, options.PwmOff);
                         Thread.Sleep(1000);
                     }
-                    log.Info("Key pressed. Exiting.");
+                    log.LogInformation("Key pressed. Exiting.");
                 }
             }
             catch (InvalidOperationException e)
             {
-                log.Error("Failed to connect? Do you have a Pca9685 IC attached to the i2c line and powered on?", e);
+                log.LogError(new EventId(0), e, "Failed to connect? Do you have a Pca9685 IC attached to the i2c line and powered on?");
             }
         }
 
@@ -79,13 +88,13 @@ namespace Test.Gpio.PCA9685
         {
             const int microSeconds = 1000000; // # 1,000,000 us per second
 
-            var pulseLengthMicroSeconds = microSeconds/(int)frequency.Hertz; // # 60 Hz
-            log.Info(m => m("{0} uSecs per period", pulseLengthMicroSeconds));
+            var pulseLengthMicroSeconds = microSeconds / (int)frequency.Hertz; // # 60 Hz
+            log.LogInformation("{0} uSecs per period", pulseLengthMicroSeconds);
 
-            var microSecondsPerBit = pulseLengthMicroSeconds/4096; // # 12 bits of resolution
-            log.Info(m => m("{0} uSecs per bit", microSecondsPerBit));
+            var microSecondsPerBit = pulseLengthMicroSeconds / 4096; // # 12 bits of resolution
+            log.LogInformation("{0} uSecs per bit", microSecondsPerBit);
 
-            return (pulse*1000)/pulseLengthMicroSeconds;
+            return (pulse * 1000) / pulseLengthMicroSeconds;
         }
 
         private static Pca9685Options ParseOptions(IEnumerable<string> arguments)

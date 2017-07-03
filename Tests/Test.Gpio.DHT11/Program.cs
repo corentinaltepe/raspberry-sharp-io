@@ -4,6 +4,8 @@ using System;
 using Raspberry.IO.Components.Sensors.Temperature.Dht;
 using Raspberry.IO.GeneralPurpose;
 using Raspberry.Timers;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 #endregion
 
@@ -15,15 +17,20 @@ namespace Test.Gpio.DHT11
         {
             const ConnectorPin measurePin = ConnectorPin.P1Pin7;
 
-            Console.WriteLine("DHT-11/DHT-22 Sample: measure humidity and temperature");
-            Console.WriteLine();
-            Console.WriteLine("\tMeasure: {0}", measurePin);
-            Console.WriteLine();
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging();
+
+            var sp = serviceCollection.BuildServiceProvider();
+            sp.GetRequiredService<LoggerFactory>().AddConsole().AddDebug();
+            var log = sp.GetRequiredService<ILogger<Program>>();
+
+            log.LogInformation("DHT-11/DHT-22 Sample: measure humidity and temperature");
+            log.LogInformation("\tMeasure: {0}", measurePin);
 
             var driver = GpioConnectionSettings.GetBestDriver(GpioConnectionDriverCapabilities.CanChangePinDirectionRapidly);
 
             using (var pin = driver.InOut(measurePin))
-            using (var dhtConnection = new Dht11Connection(pin))
+            using (var dhtConnection = new Dht11Connection(sp, pin))
             {
                 while (!Console.KeyAvailable)
                 {

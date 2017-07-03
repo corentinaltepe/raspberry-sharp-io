@@ -303,7 +303,7 @@ namespace Raspberry.IO.InterIntegratedCircuit
                     return Interop.BCM2835_BSC1_BASE;
 
                 case Processor.Bcm2709:
-                case Processor.BCM2835: // <- added this one JJ FIX per RB3
+                case Processor.Bcm2835: // <- added this one JJ FIX per RB3
                     return Interop.BCM2836_BSC1_BASE;
                 
                 default:
@@ -319,7 +319,7 @@ namespace Raspberry.IO.InterIntegratedCircuit
                     return Interop.BCM2835_GPIO_BASE;
 
                 case Processor.Bcm2709:
-                case Processor.BCM2835: // <- added this one JJ FIX per RB3
+                case Processor.Bcm2835: // <- added this one JJ FIX per RB3
                     return Interop.BCM2836_GPIO_BASE;
 
                 default:

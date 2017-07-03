@@ -23,7 +23,7 @@ namespace Tests.Raspberry.IO.SerialPeripheralInterface.InteropSpec
         [Test,TestCaseSource("TestCases")]
         public UInt32 Shall_the_result_be_correct(int numberOfMessages) {
             var result = InteropProd.GetSpiMessageRequest(numberOfMessages);
-            Debug.Print("SPI_IOC_MESSAGE({0}) = {1:x}", numberOfMessages, result);
+            Console.WriteLine("SPI_IOC_MESSAGE({0}) = {1:x}", numberOfMessages, result);
             return result;
         }
     }

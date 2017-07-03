@@ -1,94 +1,24 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{17A2A965-36FA-4CDB-B2D6-AC69C9E9857F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tests.Raspberry.IO.SerialPeripheralInterface</RootNamespace>
-    <AssemblyName>Tests.Raspberry.IO.SerialPeripheralInterface</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
-    <TargetFrameworkProfile />
+    <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="FakeItEasy, Version=1.25.3.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\FakeItEasy.1.25.3\lib\net40\FakeItEasy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentAssertions, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentAssertions.4.19.2\lib\net45\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentAssertions.4.19.2\lib\net45\FluentAssertions.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="FakeItEasy" Version="3.4.2" />
+    <PackageReference Include="FluentAssertions" Version="4.19.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <packagereference Include="NUnit" Version="3.7.1"></packagereference>
+    <packagereference Include="NUnit3TestAdapter" Version="3.8.0-alpha1"></packagereference>
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Interop\InteropSpec.cs" />
-    <Compile Include="NativeSpiConnectionSpecs.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpiTransferBufferSpecs.cs" />
+    <ProjectReference Include="..\..\Raspberry.IO.Interop\Raspberry.IO.Interop.csproj" />
+    <ProjectReference Include="..\..\Raspberry.IO.SerialPeripheralInterface\Raspberry.IO.SerialPeripheralInterface.csproj" />
+    <ProjectReference Include="..\Tests.Raspberry.IO.Interop\Tests.Raspberry.IO.Interop.csproj" />
+    <ProjectReference Include="..\Tests.Raspberry.IO\Tests.Raspberry.IO.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\..\Raspberry.IO.Interop\Raspberry.IO.Interop.csproj">
-      <Project>{6F9053CF-445B-46A5-9DF1-BF73A92BFC31}</Project>
-      <Name>Raspberry.IO.Interop</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Raspberry.IO.SerialPeripheralInterface\Raspberry.IO.SerialPeripheralInterface.csproj">
-      <Project>{05193a32-51b5-455e-9805-1c946a39bd6c}</Project>
-      <Name>Raspberry.IO.SerialPeripheralInterface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tests.Raspberry.IO.Interop\Tests.Raspberry.IO.Interop.csproj">
-      <Project>{caf876a0-0fcb-44f7-96f1-53704cb6015f}</Project>
-      <Name>Tests.Raspberry.IO.Interop</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tests.Raspberry.IO\Tests.Raspberry.IO.csproj">
-      <Project>{0BB6C3CE-422E-49F2-9165-DEC06AFE1B1A}</Project>
-      <Name>Tests.Raspberry.IO</Name>
-    </ProjectReference>
+    <Folder Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

@@ -193,7 +193,7 @@ namespace Tests.Raspberry.IO.Components.Controllers.Tlc59711.Tlc59711DeviceSpecs
                 var device = new Tlc59711Device(memory);
                 action(device);
 
-                Debug.Print("Running action on: {0}", description);
+                Console.WriteLine("Running action on: {0}", description);
                 return memory
                     .Take(4)
                     .ToBitString();

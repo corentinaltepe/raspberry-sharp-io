@@ -199,7 +199,7 @@ namespace Raspberry
                     else
                         suffix = "";
                 }
-
+                System.Diagnostics.Debug.WriteLine(settings);
                 return new Board(settings);
             }
             catch

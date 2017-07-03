@@ -17,7 +17,9 @@
       <VersionMinor Condition=" '$(VersionMinor)' == '' ">0</VersionMinor>
       <VersionPatch Condition=" '$(VersionPatch)' == '' ">0</VersionPatch>
       <VersionPreRelease Condition=" '$(VersionPreRelease)' != '' ">-$(VersionPreRelease)</VersionPreRelease>
-      <VersionRevision Condition=" '$(VersionRevision)' == '' Or '$(VersionRevision)' == 0 ">$([System.DateTime]::UtcNow.Subtract($([System.DateTime]::Parse("1970-01-01T00:00:00.0000000Z").ToUniversalTime())).TotalDays.ToString("F0"))</VersionRevision>
+      <VersionRevision1>$([System.DateTime]::UtcNow.Subtract($([System.DateTime]::Parse("2000-01-01T00:00:00.0000000Z").ToUniversalTime())).TotalDays.ToString("F0"))</VersionRevision1>
+      <VersionRevision2>$([MSBuild]::Divide($([System.DateTime]::UtcNow.TimeOfDay.TotalSeconds),10).ToString("0000"))</VersionRevision2>
+      <VersionRevision Condition=" '$(VersionRevision)' == '' Or '$(VersionRevision)' == 0 ">$(VersionRevision1)$(VersionRevision2)</VersionRevision>
       <!-- <InformationalVersion>$(Version). Commit Hash: $(GitCommitHash.Substring(0,7))</InformationalVersion> -->
       <Version>$(VersionMajor).$(VersionMinor).$(VersionPatch).$(VersionRevision)$(VersionPreRelease)</Version>
       <InformationalVersion>$(Version)-g$(GitCommitHash.Substring(0,7))</InformationalVersion>

@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Tests.Raspberry.IO.Interop\Tests.Raspberry.IO.Interop.csproj" />
     <ProjectReference Include="..\Tests.Raspberry.IO\Tests.Raspberry.IO.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
 </Project>

@@ -166,7 +166,7 @@ namespace Raspberry
 
         public override string ToString()
         {
-            return settings.ToString();
+            return settings.DictToString();
         }
 
         #endregion
@@ -199,7 +199,7 @@ namespace Raspberry
                     else
                         suffix = "";
                 }
-                System.Diagnostics.Debug.WriteLine(settings);
+                System.Diagnostics.Debug.WriteLine(settings.DictToString());
                 return new Board(settings);
             }
             catch

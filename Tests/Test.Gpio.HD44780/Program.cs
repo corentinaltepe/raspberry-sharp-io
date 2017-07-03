@@ -25,10 +25,10 @@ namespace Test.Gpio.HD44780
             using (var configuration = ConfigurationLoader.FromArguments(args))
             using (var connection = new Hd44780LcdConnection(settings, configuration.Pins))
             {
-                connection.SetCustomCharacter(1, new byte[] {0x0, 0x0, 0x04, 0xe, 0x1f, 0x0, 0x0});
-                connection.SetCustomCharacter(2, new byte[] {0x0, 0x0, 0x1f, 0xe, 0x04, 0x0, 0x0});
+                connection.SetCustomCharacter(1, new byte[] { 0x0, 0x0, 0x04, 0xe, 0x1f, 0x0, 0x0 });
+                connection.SetCustomCharacter(2, new byte[] { 0x0, 0x0, 0x1f, 0xe, 0x04, 0x0, 0x0 });
 
-                if (args.Contains("viewMap", StringComparer.InvariantCultureIgnoreCase))
+                if (args.Contains("viewMap", StringComparer.OrdinalIgnoreCase))
                 {
                     connection.Clear();
                     DisplayCharMap(connection);
@@ -36,21 +36,32 @@ namespace Test.Gpio.HD44780
 
                 connection.Clear();
                 connection.WriteLine("R# IP Config");
-                connection.WriteLine(Environment.OSVersion);
+                connection.WriteLine(System.Runtime.InteropServices.RuntimeInformation.OSDescription);
 
                 Thread.Sleep(TimeSpan.FromSeconds(2));
 
                 var delay = 0m;
                 while (true)
                 {
+                    //foreach (var t in NetworkInterface.GetAllNetworkInterfaces()
+                    //    .Where(i => i.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                    //    .SelectMany(i => new[]
+                    //                         {
+                    //                             string.Format("{0}: {1}", i.Name, i.OperationalStatus)
+                    //                             + Environment.NewLine
+                    //                             + string.Format("\u0002{0} \u0001{1}", FormatByteCount(i.GetIPv4Statistics().BytesReceived), FormatByteCount(i.GetIPv4Statistics().BytesSent)),
+
+                    //                             "IP  " + (i.GetIPProperties().UnicastAddresses.Select(a => a.Address.ToString()).FirstOrDefault() ?? "(unassigned)")
+                    //                             + Environment.NewLine
+                    //                             + "MAC " + i.GetPhysicalAddress().ToString()
+                    //                         }))
+                    //{
                     foreach (var t in NetworkInterface.GetAllNetworkInterfaces()
                         .Where(i => i.NetworkInterfaceType != NetworkInterfaceType.Loopback)
                         .SelectMany(i => new[]
                                              {
                                                  string.Format("{0}: {1}", i.Name, i.OperationalStatus)
-                                                 + Environment.NewLine
-                                                 + string.Format("\u0002{0} \u0001{1}", FormatByteCount(i.GetIPv4Statistics().BytesReceived), FormatByteCount(i.GetIPv4Statistics().BytesSent)),
-
+                                                 + Environment.NewLine,
                                                  "IP  " + (i.GetIPProperties().UnicastAddresses.Select(a => a.Address.ToString()).FirstOrDefault() ?? "(unassigned)")
                                                  + Environment.NewLine
                                                  + "MAC " + i.GetPhysicalAddress().ToString()
@@ -101,7 +112,7 @@ namespace Test.Gpio.HD44780
                                 }
                             }
 
-                            Thread.Sleep(TimeSpan.FromSeconds(2d /20));
+                            Thread.Sleep(TimeSpan.FromSeconds(2d / 20));
                         }
                     }
                 }
@@ -113,7 +124,7 @@ namespace Test.Gpio.HD44780
         private static void DisplayCharMap(Hd44780LcdConnection connection)
         {
             var idx = 0;
-            foreach (var group in Hd44780A00Encoding.SupportedCharacters.GroupBy(c => (idx++/40)))
+            foreach (var group in Hd44780A00Encoding.SupportedCharacters.GroupBy(c => (idx++ / 40)))
             {
                 var s1 = new string(@group.Take(20).ToArray());
                 var s2 = new string(@group.Skip(20).Take(20).ToArray());
@@ -131,12 +142,12 @@ namespace Test.Gpio.HD44780
         {
             if (byteCount < 1024)
                 return string.Format("{0}B", byteCount);
-            if (byteCount < 1024*1024)
-                return string.Format("{0:0.0}KB", byteCount/1024.0m);
-            if (byteCount < 1024*1024*1024)
-                return string.Format("{0:0.0}MB", byteCount/(1024*1024.0m));
+            if (byteCount < 1024 * 1024)
+                return string.Format("{0:0.0}KB", byteCount / 1024.0m);
+            if (byteCount < 1024 * 1024 * 1024)
+                return string.Format("{0:0.0}MB", byteCount / (1024 * 1024.0m));
 
-            return string.Format("{0:0.0}GB", byteCount/(1024*1024*1024.0m));
+            return string.Format("{0:0.0}GB", byteCount / (1024 * 1024 * 1024.0m));
         }
 
         #endregion

@@ -22,26 +22,26 @@ namespace Test.Gpio.HD44780
 
         public static Hd44780Configuration FromArguments(string[] args)
         {
-            if (args.Contains("mcp23008", StringComparer.InvariantCultureIgnoreCase))
+            if (args.Contains("mcp23008", StringComparer.OrdinalIgnoreCase))
                 return LoadMcp23008Configuration(args);
 
-            if (args.Contains("mcp23017", StringComparer.InvariantCultureIgnoreCase))
+            if (args.Contains("mcp23017", StringComparer.OrdinalIgnoreCase))
                 return LoadMcp23017Configuration(args);
 
-            if (args.Contains("pcf8574", StringComparer.InvariantCultureIgnoreCase))
+            if (args.Contains("pcf8574", StringComparer.OrdinalIgnoreCase))
                 return LoadPcf8574Configuration(args);
 
             return LoadGpioConfiguration();
         }
 
         #endregion
-        
+
         #region Private Helpers
 
         private static Hd44780Configuration LoadMcp23008Configuration(IEnumerable<string> args)
         {
-            var addressText = args.SkipWhile(s => !String.Equals(s, "mcp23008", StringComparison.InvariantCultureIgnoreCase)).Skip(1).DefaultIfEmpty("0x20").First();
-            var address = addressText.StartsWith("0x", StringComparison.InvariantCultureIgnoreCase)
+            var addressText = args.SkipWhile(s => !String.Equals(s, "mcp23008", StringComparison.OrdinalIgnoreCase)).Skip(1).DefaultIfEmpty("0x20").First();
+            var address = addressText.StartsWith("0x", StringComparison.OrdinalIgnoreCase)
                 ? Int32.Parse(addressText.Substring(2), NumberStyles.HexNumber)
                 : Int32.Parse(addressText);
 
@@ -90,8 +90,8 @@ namespace Test.Gpio.HD44780
 
         private static Hd44780Configuration LoadMcp23017Configuration(IEnumerable<string> args)
         {
-            var addressText = args.SkipWhile(s => !String.Equals(s, "mcp23017", StringComparison.InvariantCultureIgnoreCase)).Skip(1).DefaultIfEmpty("0x20").First();
-            var address = addressText.StartsWith("0x", StringComparison.InvariantCultureIgnoreCase)
+            var addressText = args.SkipWhile(s => !String.Equals(s, "mcp23017", StringComparison.OrdinalIgnoreCase)).Skip(1).DefaultIfEmpty("0x20").First();
+            var address = addressText.StartsWith("0x", StringComparison.OrdinalIgnoreCase)
                 ? Int32.Parse(addressText.Substring(2), NumberStyles.HexNumber)
                 : Int32.Parse(addressText);
 
@@ -134,8 +134,8 @@ namespace Test.Gpio.HD44780
 
         private static Hd44780Configuration LoadPcf8574Configuration(IEnumerable<string> args)
         {
-            var addressText = args.SkipWhile(s => !String.Equals(s, "pcf8574", StringComparison.InvariantCultureIgnoreCase)).Skip(1).DefaultIfEmpty("0x20").First();
-            var address = addressText.StartsWith("0x", StringComparison.InvariantCultureIgnoreCase)
+            var addressText = args.SkipWhile(s => !String.Equals(s, "pcf8574", StringComparison.OrdinalIgnoreCase)).Skip(1).DefaultIfEmpty("0x20").First();
+            var address = addressText.StartsWith("0x", StringComparison.OrdinalIgnoreCase)
                 ? Int32.Parse(addressText.Substring(2), NumberStyles.HexNumber)
                 : Int32.Parse(addressText);
 

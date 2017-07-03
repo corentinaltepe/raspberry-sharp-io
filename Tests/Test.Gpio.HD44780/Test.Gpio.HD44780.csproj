@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Net.NetworkInformation" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Raspberry.IO.Components\Raspberry.IO.Components.csproj" />
     <ProjectReference Include="..\..\Raspberry.IO.GeneralPurpose\Raspberry.IO.GeneralPurpose.csproj" />
     <ProjectReference Include="..\..\Raspberry.IO.InterIntegratedCircuit\Raspberry.IO.InterIntegratedCircuit.csproj" />

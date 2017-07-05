@@ -1,6 +1,8 @@
 ﻿Raspberry# IO
 =============
 
+https://hermancat.visualstudio.com/_apis/public/build/definitions/e0655c6b-979a-4e1a-b27a-04f104e3863f/1/badge
+
 See the **[Raspberry\# IO Wiki](https://github.com/raspberry-sharp/raspberry-sharp-io/wiki)** for full documentation and samples.
 
 Introduction

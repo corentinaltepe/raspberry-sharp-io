@@ -1,16 +1,20 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(ProjectDir)..\</SolutionDir>
+  </PropertyGroup>
+  
   <Target Name="GitHash">
     <Exec Command="git rev-parse HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low">
       <Output TaskParameter="ConsoleOutput" PropertyName="GitCommitHash" />
     </Exec>
   </Target>
-  
-  <Target Name="GetAssemblyVersion2" AfterTargets="GetAssemblyVersion" BeforeTargets="GetAssemblyAttributes" DependsOnTargets="GitHash">
+
+  <Target Name="SetAssemblyVersion" BeforeTargets="PrepareForBuild;GenerateNuSpec" DependsOnTargets="GitHash">
     <PropertyGroup>
       <VersionPattern>^v?(?&lt;major&gt;0|[1-9][0-9]*)\.(?&lt;minor&gt;0|[1-9][0-9]*)(?:\.(?&lt;patch&gt;0|[1-9][0-9]*)(?:\.(?&lt;revision&gt;0|[1-9][0-9]*))?)?(?&lt;prerelease&gt;-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?&lt;buildMetadata&gt;\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$</VersionPattern>
       <OldInformationalVersion>$(InformationalVersion)</OldInformationalVersion>
-      <OldVersion>$(InformationalVersion)</OldVersion>
+      <OldVersion>$(Version)</OldVersion>
       <VersionMajor>$([System.Text.RegularExpressions.Regex]::Match($(Version), $(VersionPattern)).Groups["major"].Value)</VersionMajor>
       <VersionMinor>$([System.Text.RegularExpressions.Regex]::Match($(Version), $(VersionPattern)).Groups["minor"].Value)</VersionMinor>
       <VersionPatch>$([System.Text.RegularExpressions.Regex]::Match($(Version), $(VersionPattern)).Groups["patch"].Value)</VersionPatch>
@@ -19,21 +23,14 @@
       <VersionMajor Condition="'$(VersionMajor)'==''">0</VersionMajor>
       <VersionMinor Condition="'$(VersionMinor)'==''">0</VersionMinor>
       <VersionPatch Condition="'$(VersionPatch)'==''">0</VersionPatch>
-      <VersionRevision1>$([System.DateTime]::UtcNow.Subtract($([System.DateTime]::Parse("2000-01-01T00:00:00.0000000Z").ToUniversalTime())).TotalDays.ToString("F0"))</VersionRevision1>
+      <VersionRevision1>$([System.DateTime]::UtcNow.Subtract($([System.DateTime]::Parse("2010-01-01T00:00:00.0000000Z").ToUniversalTime())).TotalDays.ToString("F0"))</VersionRevision1>
       <VersionRevision2>$([MSBuild]::Divide($([System.DateTime]::UtcNow.TimeOfDay.TotalSeconds),10).ToString("0000"))</VersionRevision2>
       <VersionRevision Condition=" '$(VersionRevision)' == '' Or '$(VersionRevision)' == 0 ">$(VersionRevision1)$(VersionRevision2)</VersionRevision>
-      <VersionPreRelease Condition=" '$(VersionPreRelease)' == '' ">-b$(VersionRevision)+$(GitCommitHash.Substring(0,7))</VersionPreRelease>
-      <Version>$(VersionMajor).$(VersionMinor).$(VersionPatch)</Version>
-      <InformationalVersion>$(VersionMajor).$(VersionMinor).$(VersionPatch)$(VersionPreRelease)</InformationalVersion>
-      <PackageVersion>$(VersionMajor).$(VersionMinor).$(VersionPatch)-b$(VersionRevision)</PackageVersion>
-    </PropertyGroup>
-  </Target>
-  
-  <Target Name="ModifyNugetDesc" BeforeTargets="GenerateNuspec" DependsOnTargets="GitHash">
-    <PropertyGroup>
-      <Description>$(Description)
-Version: $(Version), Commit hash: $(GitCommitHash.Substring(0,7))
-</Description>
+      <InformationalVersion>$(VersionMajor).$(VersionMinor).$(VersionPatch)-build$(VersionRevision)+$(GitCommitHash.Substring(0,7))</InformationalVersion>
+      <Description>
+        $(Description)
+        Version: $(Version), Commit hash: $(GitCommitHash.Substring(0,7))
+      </Description>
     </PropertyGroup>
   </Target>
 </Project>
